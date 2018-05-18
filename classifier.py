@@ -11,21 +11,29 @@ def classify_deck(decklist):
 			if "Entomb" in decklist:
 				return "UB Reanimator"
 
-			elif "Show and Tell" in decklist:
+			if "Death's Shadow" in decklist:
+				return "Death's Shadow"
+
+			if "Show and Tell" in decklist:
 				if "Sneak Attack" in decklist:
 					return "Sneak and Show"
 				else:
 					return "OmniTell"
 
+			if "Monastery Mentor" in decklist and "Cabal Therapy" in decklist:
+				return "Esper Mentor"
+
 			elif "Delver of Secrets" in decklist:
 				if "Deathrite Shaman" in decklist:
-					if "Gurmag Angler" in decklist and "Lightning Bolt" in decklist:
+					if ("Gurmag Angler" in decklist or "Tombstalker" in decklist or "Young Pyromancer") and "Lightning Bolt" in decklist:
 						return "Grixis Delver"
 					if "Tarmogoyf" in decklist:
 						if "Lightning Bolt" in decklist:
 							return "4C Delver"
 						else:
 							return "BUG Delver"
+					if "Lingering Souls" in decklist:
+						return "Esper Delver"
 				else:
 					if "Nimble Mongoose" in decklist:
 						return "RUG Delver"
@@ -38,7 +46,7 @@ def classify_deck(decklist):
 					elif "Dack Fayden" in decklist and "Punishing Fire" in decklist:
 						return "Punishing Dack"
 					else:
-						return "Grixis Control"
+						return "Grixis Control (DRS)"
 
 				elif "Stoneforge Mystic" in decklist:
 					if "Noble Hierarch" in decklist:
@@ -50,25 +58,42 @@ def classify_deck(decklist):
 						return "Aluren"
 					else:
 						return "Shardless BUG"
-				elif "Baleful Strix" in decklist and "Leovold, Emissary of Trest" in decklist:
+				elif ("Baleful Strix" in decklist or "True-Name Nemesis") and "Leovold, Emissary of Trest" in decklist:
 					if "Food Chain" in decklist:
 						return "Food Chain"
 					else:
 						return "BUG Control"
+			elif "Stoneforge Mystic" in decklist:
+				return "UWx Stoneblade"
+			elif ("Young Pyromancer" in decklist and "Cabal Therapy" in decklist) or ("Baleful Strix" in decklist and "Lightning Bolt" in decklist):
+				return "Grixis Control (no DRS)"
+			elif "Standstill" in decklist:
+				return "Landstill"
 			elif "Terminus" in decklist:
 				return "Miracles"
 			elif "Inkmoth Nexus" in decklist:
 				return "Infect"
 		else: # no FoW means probably Storm, or maybe BUG Nic Fit, or Tins Fins with Brainstorm
+		# or maybe a greedy czech pile deck that cut forces
+			if "Deathrite Shaman" in decklist:
+				if "Leovold, Emissary of Trest" in decklist:
+					return "Czech Pile"
+				else:
+					return "Grixis Control"
 			if "Veteran Explorer" in decklist:
 				return "Nic Fit"
 			elif "Entomb" in decklist and "Shallow Grave" in decklist:
 				return "Tin Fins"
-			elif "Dark Ritual" and "Tendrils of Agony" in decklist:
-				return "Storm"
+			elif "Dark Ritual" in decklist:
+				if "Burning Wish" in decklist:
+					return "TES"
+				elif "Cabal Ritual" in decklist:
+					return "ANT"
 		
 		return "Other (Brainstorm)"
 	elif "Chalice of the Void" in decklist:
+		if "Lord of Atlantis" in decklist:
+			return "Merfolk"
 		if "Life from the Loam" in decklist and "Dark Confidant" in decklist:
 			return "4c Loam"
 		elif "Thought-Knot Seer" in decklist and "Eye of Ugin" in decklist:
@@ -79,12 +104,33 @@ def classify_deck(decklist):
 		elif "Blood Moon" in decklist:
 			if "Sneak Attack" in decklist:
 				return "Big Red"
-			elif "Chandra, Torch of Defiance" in decklist:
+			elif "Magus of the Moon" in decklist:
 				return "Moon Stompy"
 		elif "Arcbound Ravager" in decklist:
 			return "Steel Stompy"
+		elif "Crucible of Worlds" in decklist:
+			return "Stax"
 		else:
 			return "Other (Chalice)"
+	elif "Goblin Charbelcher" in decklist:
+		return "Belcher"
+	elif "Goblin Lackey" in decklist:
+		return "Goblins"
+	elif "Undercity Informer" in decklist:
+		return "Oops All Spells"
+	elif "Infernal Contract" in decklist:
+		return "Spanish Inquisition"
+	elif "Veteran Explorer" in decklist and "Cabal Therapy" in decklist:
+		return "Nic Fit"
+	elif "Deathrite Shaman" in decklist:
+		if "Glimpse of Nature" in decklist and "Elvish Visionary" in decklist:
+			return "Elves"
+		if "Green Sun's Zenith" and "Knight of the Reliquary" in decklist:
+			return "Maverick"
+		if "Tarmogoyf" in decklist and ("Lightning Bolt" in decklist or "Punishing Fire" in decklist):
+			return "Jund"
+		if "Stoneforge Mystic" in decklist and "Thoughtseize" in decklist:
+			return "DGA/Junk"
 	elif "Dark Depths" in decklist:
 		if "Exploration" in decklist:
 			return "Lands"
@@ -92,15 +138,6 @@ def classify_deck(decklist):
 			return "Turbo Depths"
 		elif "Griselbrand" in decklist:
 			return "Reanimator Depths"
-	elif "Veteran Explorer" in decklist and "Cabal Therapy" in decklist:
-		return "Nic Fit"
-	elif "Deathrite Shaman" in decklist:
-		if "Glimpse of Nature" in decklist and "Elvish Visionary" in decklist:
-			return "Elves"
-		if "Green Sun's Zenith" and "Mother of Runes" in decklist:
-			return "Maverick"
-		if "Tarmogoyf" in decklist and "Lightning Bolt" in decklist:
-			return "Jund"
 	elif "Mother of Runes" in decklist and "Thalia, Guardian of Thraben" in decklist:
 		return "Death and Taxes"
 	elif "Entomb" in decklist and "Griselbrand" in decklist:
@@ -115,10 +152,6 @@ def classify_deck(decklist):
 			return "Mana Dredge"
 	elif "Lava Spike" in decklist:
 		return "Burn"
-	elif "Goblin Charbelcher" in decklist:
-		return "Belcher"
-	elif "Undercity Informer" in decklist:
-		return "Oops All Spells"
 	return "Other (Rogue)"
 		
 def main():
