@@ -32,7 +32,7 @@ def classify_deck(decklist):
 							return "4C Delver"
 						else:
 							return "BUG Delver"
-					if "Lingering Souls" in decklist:
+					if ("Lingering Souls" in decklist) or ("Stoneforge Mystic") in decklist:
 						return "Esper Delver"
 				else:
 					if "Nimble Mongoose" in decklist:
@@ -90,7 +90,7 @@ def classify_deck(decklist):
 				elif "Cabal Ritual" in decklist:
 					return "ANT"
 		
-		return "Other (Brainstorm)"
+		return "Other (Blue)"
 	elif "Chalice of the Void" in decklist:
 		if "Lord of Atlantis" in decklist:
 			return "Merfolk"

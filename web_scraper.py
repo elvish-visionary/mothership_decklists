@@ -64,15 +64,20 @@ def get_lists_from_mtgtop8_event(event_url):
         i = i + 1
 
 def download_mothership_decklists(event_url, destination_folder, verbose=False):
-    if not os.path.isdir(destination_folder):
-        os.makedirs(destination_folder)
 
     page = urlopen(event_url)
     soup = BeautifulSoup(page, 'html.parser')
 
     soup = soup.find('div', class_='decklists')
 
-    deck_sections = soup.find_all('div', class_="deck-group")
+    try:
+        deck_sections = soup.find_all('div', class_="deck-group")
+    except AttributeError:
+        print("Couldn't find data for this date")
+        return
+
+    if not os.path.isdir(destination_folder):
+        os.makedirs(destination_folder)
     
     for i, deck in enumerate(deck_sections):
         player_name = deck.get('id').upper().split('_TH_PLACE')[0].split('_ND_PLACE')[0].split('_ST_PLACE')[0].split('_RD_PLACE')[0]
