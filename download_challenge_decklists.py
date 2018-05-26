@@ -18,13 +18,11 @@ def main():
 	while curdate >= first_date:
 		print("Downloading Modern Challenge decklists from {}".format(curdate.date()))
 
-		dest_folder = './modern_challenge_lists/{}'.format(curdate.date())
-		event_url = "https://magic.wizards.com/en/articles/archive/mtgo-standings/modern-challenge-{}".format(curdate.date())
+		dest_folder = './challenge_lists/{}'.format(curdate.date())
+		event_url = "https://magic.wizards.com/en/articles/archive/mtgo-standings/legacy-challenge-{}".format(curdate.date())
 
-		try:
-			download_mothership_decklists(event_url, dest_folder)
-		except KeyError:
-			print("Couldn't find challenge data for this date")
+		
+		download_mothership_decklists(event_url, dest_folder)
 
 		print("Sleeping 2 seconds")
 		time.sleep(2)

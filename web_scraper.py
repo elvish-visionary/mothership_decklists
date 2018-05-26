@@ -68,10 +68,10 @@ def download_mothership_decklists(event_url, destination_folder, verbose=False):
     page = urlopen(event_url)
     soup = BeautifulSoup(page, 'html.parser')
 
-    soup = soup.find('div', class_='decklists')
+    decklists = soup.find('div', class_='decklists')
 
     try:
-        deck_sections = soup.find_all('div', class_="deck-group")
+        deck_sections = decklists.find_all('div', class_="deck-group")
     except AttributeError:
         print("Couldn't find data for this date")
         return
@@ -80,7 +80,10 @@ def download_mothership_decklists(event_url, destination_folder, verbose=False):
         os.makedirs(destination_folder)
     
     for i, deck in enumerate(deck_sections):
-        player_name = deck.get('id').upper().split('_TH_PLACE')[0].split('_ND_PLACE')[0].split('_ST_PLACE')[0].split('_RD_PLACE')[0]
+
+        #player_name = deck.get('id').upper().split('_TH_PLACE')[0].split('_ND_PLACE')[0].split('_ST_PLACE')[0].split('_RD_PLACE')[0]
+        player_name = deck.find('h4').string.split(' (')[0]
+
         print("{} place: ".format(i+1), player_name.upper())
 
         with open(os.path.join(destination_folder, '{}-{}.txt'.format(i+1, player_name)), 'w') as f:
@@ -95,6 +98,23 @@ def download_mothership_decklists(event_url, destination_folder, verbose=False):
                 card_count += int(quant.string)
             print("Total maindeck cards: ", card_count)
         print('-' * 50)
+
+    # record top 8 information if available
+
+    brackets = {'Quarterfinals': 'bracket quarterfinals first',
+                'Semifinals': 'bracket semifinals ',
+                            'Finals': 'bracket finals '}
+
+    with open(os.path.join(destination_folder, 'top8bracket.csv'), 'w') as f:
+        f.write('Winner,Loser,Round\n')
+        for bround, tag in brackets.items():
+            print(bround)
+            qf = soup.find('div', class_=tag)
+            for match in qf.find_all('div', class_='dual-players'):
+                winner = match.find('strong').string.split(') ')[1].split(',')[0]
+                loser = match.find_all('p')[1].string.split(') ')[1].rstrip()
+                print("{} beat {}".format(winner, loser))
+                f.write("{},{},{}\n".format(winner,loser,bround))
 
 
 
