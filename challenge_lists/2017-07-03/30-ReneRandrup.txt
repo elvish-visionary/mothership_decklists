@@ -1,0 +1,29 @@
+2 Baleful Strix
+4 Deathrite Shaman
+3 Snapcaster Mage
+3 Stoneforge Mystic
+2 True-Name Nemesis
+4 Ponder
+3 Thoughtseize
+1 Unearth
+4 Brainstorm
+1 Essence Flux
+1 Familiar's Ruse
+1 Fatal Push
+4 Force of Will
+1 Spell Pierce
+1 Spell Snare
+3 Swords to Plowshares
+1 Batterskull
+1 Sword of Fire and Ice
+1 Umezawa's Jitte
+4 Flooded Strand
+1 Island
+1 Marsh Flats
+1 Plains
+4 Polluted Delta
+1 Scrubland
+1 Swamp
+1 Tropical Island
+2 Tundra
+3 Underground Sea
