@@ -24,16 +24,13 @@ def classify_deck(decklist):
 				return "Esper Mentor"
 
 			elif "Delver of Secrets" in decklist:
-				if "Deathrite Shaman" in decklist:
-					if ("Gurmag Angler" in decklist or "Tombstalker" in decklist or "Young Pyromancer") and "Lightning Bolt" in decklist:
+				if "Underground Sea" in decklist:
+					if "Lightning Bolt" in decklist:
 						return "Grixis Delver"
-					if "Tarmogoyf" in decklist:
-						if "Lightning Bolt" in decklist:
-							return "4C Delver"
-						else:
-							return "BUG Delver"
-					if ("Lingering Souls" in decklist) or ("Stoneforge Mystic") in decklist:
-						return "Esper Delver"
+					elif "Bayou" in decklist:
+						return "BUG Delver"
+					else:
+						return "Other (UBx Delver)"
 				else:
 					if "Nimble Mongoose" in decklist:
 						return "RUG Delver"

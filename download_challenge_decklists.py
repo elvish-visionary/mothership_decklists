@@ -8,9 +8,9 @@ import time
 Example call: python download_challenge_decklists.py 2018-5-14
 """
 
-def main():
-	start_date = parse(sys.argv[1]) #start date must be a valid Legacy Challenge date (Monday)
-	first_date = parse(sys.argv[2])
+def main(start_date, first_date, dest_dir):
+	start_date = parse(start_date) #start date must be a valid Legacy Challenge date (Monday)
+	first_date = parse(first_date)
 
 	curdate = start_date
 
@@ -18,7 +18,7 @@ def main():
 	while curdate >= first_date:
 		print("Downloading Modern Challenge decklists from {}".format(curdate.date()))
 
-		dest_folder = './challenge_lists/{}'.format(curdate.date())
+		dest_folder = '{}/{}'.format(dest_dir, curdate.date())
 		event_url = "https://magic.wizards.com/en/articles/archive/mtgo-standings/legacy-challenge-{}".format(curdate.date())
 
 		
@@ -31,5 +31,5 @@ def main():
 		i += 1
 
 if __name__ == '__main__':
-	main()
+	main(*sys.argv[1:])
 
