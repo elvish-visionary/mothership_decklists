@@ -1,11 +1,15 @@
 
 import os
-from classifier_modern import classify_deck
+from classifier_post_drs import classify_deck
 import pandas as pd
 import numpy as np
 from dateutil.parser import parse
 
-challenge_deck_path = './modern_challenge_lists'
+challenge_deck_path = './challenge_lists_2018_legacy_postban'
+
+raw_results_file = 'processed_results/raw_legacy_challenge_postban_results.csv'
+player_rankings_file = 'processed_results/legacy_challenge_postban_player_rankings.csv'
+deck_file = 'processed_results/legacy_challenge_postban_rankings.csv'
 
 records = {
 	'Player': [],
@@ -22,13 +26,16 @@ i = 0
 
 for challenge_dir in os.listdir(challenge_deck_path):
 
-	if parse(challenge_dir) <= parse('2018-2-14'):
-		print("Skipping pre-unban challenge on {}".format(challenge_dir))
-		continue
+	# if parse(challenge_dir) <= parse('2018-2-14'):
+	# 	print("Skipping pre-unban challenge on {}".format(challenge_dir))
+	# 	continue
 
-	print("Moderm Challenge on {}".format(challenge_dir))
+	print("Challenge on {}".format(challenge_dir))
 	
 	for f in os.listdir(os.path.join(challenge_deck_path, challenge_dir)):
+
+		if f.endswith('.csv'):
+			continue
 		place = f.split('-', 1)[0]
 		place = int(place)
 
@@ -78,7 +85,7 @@ print("{} rogue decks found".format(i))
 
 
 records = pd.DataFrame(records)
-records.to_csv('raw_modern_challenge_results.csv', index=False)
+records.to_csv(raw_results_file, index=False)
 
 by_player = records.groupby('Player').agg({'Top 8': ['count', 'sum'],
 																 'Deck': lambda x: ', '.join(list(set(x)))}).reset_index()
@@ -87,7 +94,7 @@ by_player.columns = by_player.columns.droplevel()
 
 by_player.rename(columns={'count': 'Top 32', 'sum': 'Top 8', '<lambda>': 'Decks used'}, inplace=True)
 
-by_player.sort_values(['Top 8','Top 32'], ascending=False).to_csv('modern_player_rankings.csv', index=False)
+by_player.sort_values(['Top 8','Top 32'], ascending=False).to_csv(player_rankings_file, index=False)
 
 bydeck = records.groupby('Deck').agg({'Top 8': ['count', 'sum']}).reset_index()
 
@@ -109,4 +116,4 @@ bydeck['Conversion Rate'] = p
 bydeck['CI_lower'] = CI_lower
 bydeck['CI_upper'] = CI_upper
 
-bydeck.sort_values(['Top 8','Top 32'], ascending=False).to_csv('modern_deck_rankings.csv', index=False)
+bydeck.sort_values(['Top 8','Top 32'], ascending=False).to_csv(deck_file, index=False)

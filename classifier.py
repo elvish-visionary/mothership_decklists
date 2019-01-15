@@ -122,6 +122,18 @@ def classify_deck(decklist):
 		return "Spanish Inquisition"
 	elif "Veteran Explorer" in decklist and "Cabal Therapy" in decklist:
 		return "Nic Fit"
+
+	elif "Argothian Enchantress" in decklist:
+		return "Enchantress"
+
+	elif "Dark Depths" in decklist:
+		if "Exploration" in decklist:
+			return "Lands"
+		elif ("Vampire Hexmage" in decklist) and ("Crop Rotation" in decklist):
+			return "Turbo Depths"
+		elif "Griselbrand" in decklist:
+			return "Reanimator Depths"
+
 	elif "Deathrite Shaman" in decklist:
 		if "Glimpse of Nature" in decklist and "Elvish Visionary" in decklist:
 			return "Elves"
@@ -131,13 +143,7 @@ def classify_deck(decklist):
 			return "Jund"
 		if "Stoneforge Mystic" in decklist and "Thoughtseize" in decklist:
 			return "DGA/Junk"
-	elif "Dark Depths" in decklist:
-		if "Exploration" in decklist:
-			return "Lands"
-		elif "Vampire Hexmage" and "Crop Rotation" in decklist:
-			return "Turbo Depths"
-		elif "Griselbrand" in decklist:
-			return "Reanimator Depths"
+
 	elif "Mother of Runes" in decklist and "Thalia, Guardian of Thraben" in decklist:
 		return "Death and Taxes"
 	elif "Entomb" in decklist and "Griselbrand" in decklist:
