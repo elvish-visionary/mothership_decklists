@@ -47,7 +47,7 @@ for challenge_dir in os.listdir(challenge_deck_path):
 			decklist = deck.read()
 			deck_name = classify_deck(decklist)
 
-		if "Other (Rogue)" in deck_name:
+		if "Other" in deck_name:
 			i += 1
 			print("{} got {} place with {}".format(player_name, place, deck_name))
 			print(decklist)
